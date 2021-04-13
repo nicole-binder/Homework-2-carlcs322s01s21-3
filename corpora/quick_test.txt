@@ -1,0 +1,23 @@
+Hey! Hello, my friend. How are you?
+My name is Nicole. Nice to meet you!
+This is a very quick test to make debugging easier. 
+Hello, my friend. How are you?
+My name is Nicole. Nice to meet you!
+Hello, my name is Nicole. Here is another sentence.
+
+Hey! Hello, my friend. How are you?
+My name is Nicole. Nice to meet you!
+This is a very quick test to make debugging easier. 
+Hello, my friend. How are you?
+My name is Nicole. Nice to meet you!
+Tee hee!
+
+#The name is Nicole. Hey
+
+x = "The name is Nicole. Hey"
+
+PRP NN NLN TFR . FRD
+
+
+
+

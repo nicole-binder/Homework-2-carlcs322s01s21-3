@@ -1,0 +1,207 @@
+Prince Philip PERSON People, including fictional
+Kate Williams PERSON People, including fictional
+CNN ORG Companies, agencies, institutions, etc.
+Elizabeth PERSON People, including fictional
+Philip PERSON People, including fictional
+seven years old DATE Absolute or relative dates or periods
+Marina LOC Non-GPE locations, mountain ranges, bodies of water
+Greece GPE Countries, cities, states
+Denmark GPE Countries, cities, states
+12-year-old DATE Absolute or relative dates or periods
+Philip PERSON People, including fictional
+first ORDINAL "first", "second", etc.
+Prince Philip PERSON People, including fictional
+third ORDINAL "first", "second", etc.
+Queen Victoria PERSON People, including fictional
+five years later DATE Absolute or relative dates or periods
+1939 DATE Absolute or relative dates or periods
+Elizabeth’s ORG Companies, agencies, institutions, etc.
+Edward VIII PERSON People, including fictional
+three years earlier DATE Absolute or relative dates or periods
+Philip PERSON People, including fictional
+18-year-old DATE Absolute or relative dates or periods
+Europe LOC Non-GPE locations, mountain ranges, bodies of water
+World War II EVENT Named hurricanes, battles, wars, sports events, etc.
+Elizabeth PERSON People, including fictional
+Marion Crawford PERSON People, including fictional
+July 1939 DATE Absolute or relative dates or periods
+Philip PERSON People, including fictional
+the Royal Naval College ORG Companies, agencies, institutions, etc.
+Dartmouth ORG Companies, agencies, institutions, etc.
+Elizabeth PERSON People, including fictional
+Elizabeth’s ORG Companies, agencies, institutions, etc.
+Philip’s ORG Companies, agencies, institutions, etc.
+Dickie Mountbatten PERSON People, including fictional
+Dartmouth ORG Companies, agencies, institutions, etc.
+the Royal Yacht ORG Companies, agencies, institutions, etc.
+Philip GPE Countries, cities, states
+Elizabeth PERSON People, including fictional
+Philip PERSON People, including fictional
+Greece GPE Countries, cities, states
+Paris GPE Countries, cities, states
+Philip PERSON People, including fictional
+Gordonstoun PERSON People, including fictional
+Scotland GPE Countries, cities, states
+Cecile PERSON People, including fictional
+eight months DATE Absolute or relative dates or periods
+German NORP Nationalities or religious or political groups
+Philip PERSON People, including fictional
+Philip PERSON People, including fictional
+Elizabeth PERSON People, including fictional
+Christmas DATE Absolute or relative dates or periods
+1943 DATE Absolute or relative dates or periods
+Elizabeth PERSON People, including fictional
+17 DATE Absolute or relative dates or periods
+Philip PERSON People, including fictional
+Philip PERSON People, including fictional
+Elizabeth PERSON People, including fictional
+Margaret PERSON People, including fictional
+Palace ORG Companies, agencies, institutions, etc.
+Queen PERSON People, including fictional
+Philip PERSON People, including fictional
+Dickie Mountbatten PERSON People, including fictional
+one CARDINAL Numerals that do not fall under another type
+German NORP Nationalities or religious or political groups
+Elizabeth PERSON People, including fictional
+Philip GPE Countries, cities, states
+the age of 13 DATE Absolute or relative dates or periods
+July 8, 1947 DATE Absolute or relative dates or periods
+November 20 DATE Absolute or relative dates or periods
+British NORP Nationalities or religious or political groups
+Mountbatten PERSON People, including fictional
+Winston Churchill PERSON People, including fictional
+10,000 CARDINAL Numerals that do not fall under another type
+Philip PERSON People, including fictional
+three CARDINAL Numerals that do not fall under another type
+German NORP Nationalities or religious or political groups
+Edward VIII PERSON People, including fictional
+Wallis Simpson PERSON People, including fictional
+the day DATE Absolute or relative dates or periods
+Westminster Abbey FAC Buildings, airports, highways, bridges, etc.
+Elizabeth PERSON People, including fictional
+Philip PERSON People, including fictional
+Admiralty ORG Companies, agencies, institutions, etc.
+two CARDINAL Numerals that do not fall under another type
+Charles PERSON People, including fictional
+Anne PERSON People, including fictional
+1948 DATE Absolute or relative dates or periods
+1950 DATE Absolute or relative dates or periods
+Clarence House FAC Buildings, airports, highways, bridges, etc.
+Philip PERSON People, including fictional
+Philip PERSON People, including fictional
+Malta GPE Countries, cities, states
+Elizabeth PERSON People, including fictional
+Elizabeth PERSON People, including fictional
+early 1952 DATE Absolute or relative dates or periods
+Elizabeth PERSON People, including fictional
+Philip PERSON People, including fictional
+Kenya GPE Countries, cities, states
+Treetops WORK_OF_ART Titles of books, songs, etc.
+the Aberdare National Park FAC Buildings, airports, highways, bridges, etc.
+the night of February 9, 1952 TIME Times smaller than a day
+George VI PERSON People, including fictional
+Philip PERSON People, including fictional
+London GPE Countries, cities, states
+Elizabeth PERSON People, including fictional
+Philip PERSON People, including fictional
+years DATE Absolute or relative dates or periods
+56 CARDINAL Numerals that do not fall under another type
+Elizabeth PERSON People, including fictional
+Philip PERSON People, including fictional
+many years DATE Absolute or relative dates or periods
+Philip PERSON People, including fictional
+Clarence House ORG Companies, agencies, institutions, etc.
+Buckingham Palace FAC Buildings, airports, highways, bridges, etc.
+Philip PERSON People, including fictional
+Elizabeth’s ORG Companies, agencies, institutions, etc.
+Queen Mary PERSON People, including fictional
+Philip PERSON People, including fictional
+Mountbatten PERSON People, including fictional
+Dickie PERSON People, including fictional
+the Royal House of Mountbatten ORG Companies, agencies, institutions, etc.
+Winston Churchill PERSON People, including fictional
+Queen Mary PERSON People, including fictional
+Philip PERSON People, including fictional
+1960 DATE Absolute or relative dates or periods
+Edward PERSON People, including fictional
+1964 DATE Absolute or relative dates or periods
+Royal Highness ORG Companies, agencies, institutions, etc.
+Mountbatten-Windsor WORK_OF_ART Titles of books, songs, etc.
+Philip PERSON People, including fictional
+Elizabeth’s Coronation Commission ORG Companies, agencies, institutions, etc.
+one CARDINAL Numerals that do not fall under another type
+the Hitler Youth LOC Non-GPE locations, mountain ranges, bodies of water
+Prince Philip PERSON People, including fictional
+Philip PERSON People, including fictional
+first ORDINAL "first", "second", etc.
+BBC Panorama ORG Companies, agencies, institutions, etc.
+Richard Dimbleby PERSON People, including fictional
+1961 DATE Absolute or relative dates or periods
+Philip PERSON People, including fictional
+Royal Family WORK_OF_ART Titles of books, songs, etc.
+1969 DATE Absolute or relative dates or periods
+Philip PERSON People, including fictional
+Philip PERSON People, including fictional
+more than 800 CARDINAL Numerals that do not fall under another type
+the World Wildlife Fund ORG Companies, agencies, institutions, etc.
+1961 to 1982 DATE Absolute or relative dates or periods
+William PERSON People, including fictional
+Harry PERSON People, including fictional
+London GPE Countries, cities, states
+Diana PERSON People, including fictional
+Wales GPE Countries, cities, states
+September 1997 DATE Absolute or relative dates or periods
+Diana PERSON People, including fictional
+Diamond Jubilee PERSON People, including fictional
+2012 DATE Absolute or relative dates or periods
+British NORP Nationalities or religious or political groups
+99 DATE Absolute or relative dates or periods
+Queen Victoria PERSON People, including fictional
+one CARDINAL Numerals that do not fall under another type
+Prince William PERSON People, including fictional
+2012 DATE Absolute or relative dates or periods
+
+
+first ORDINAL "first", "second", etc.
+seven years old DATE Absolute or relative dates or periods
+12-year-old DATE Absolute or relative dates or periods
+first ORDINAL "first", "second", etc.
+third ORDINAL "first", "second", etc.
+five years later DATE Absolute or relative dates or periods
+1939 DATE Absolute or relative dates or periods
+three years earlier DATE Absolute or relative dates or periods
+18-year-old DATE Absolute or relative dates or periods
+july 1939 DATE Absolute or relative dates or periods
+eight months DATE Absolute or relative dates or periods
+1943 DATE Absolute or relative dates or periods
+17 DATE Absolute or relative dates or periods
+one CARDINAL Numerals that do not fall under another type
+the age of 13 DATE Absolute or relative dates or periods
+july 8, 1947 DATE Absolute or relative dates or periods
+november 20 DATE Absolute or relative dates or periods
+10,000 CARDINAL Numerals that do not fall under another type
+three CARDINAL Numerals that do not fall under another type
+the day DATE Absolute or relative dates or periods
+first ORDINAL "first", "second", etc.
+two CARDINAL Numerals that do not fall under another type
+1948 DATE Absolute or relative dates or periods
+1950 DATE Absolute or relative dates or periods
+early 1952 DATE Absolute or relative dates or periods
+the night TIME Times smaller than a day
+years DATE Absolute or relative dates or periods
+56 DATE Absolute or relative dates or periods
+many years DATE Absolute or relative dates or periods
+1960 DATE Absolute or relative dates or periods
+1964 DATE Absolute or relative dates or periods
+one CARDINAL Numerals that do not fall under another type
+first ORDINAL "first", "second", etc.
+1961 DATE Absolute or relative dates or periods
+1969 DATE Absolute or relative dates or periods
+more than 800 CARDINAL Numerals that do not fall under another type
+1961 to 1982 DATE Absolute or relative dates or periods
+september 1997 DATE Absolute or relative dates or periods
+2012 DATE Absolute or relative dates or periods
+british NORP Nationalities or religious or political groups
+99 DATE Absolute or relative dates or periods
+one CARDINAL Numerals that do not fall under another type
+2012 DATE Absolute or relative dates or periods

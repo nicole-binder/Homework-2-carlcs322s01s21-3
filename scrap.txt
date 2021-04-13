@@ -1,0 +1,12 @@
+for tag in n_gram_tags:
+      # if the tag exists in the dictionary, add a random token of this tag to new_n_gram
+      if tag in self.pos_to_token_transitions.keys():
+        for token in self.pos_to_token_transitions[tag]:
+          if random_number >= token[1][0] and random_number < token[1][1]:
+            new_n_gram.append(token[0])
+      # if the tag doesn't exist in the dictionary, get a random tag and a random corresponding token
+      # but this shouldn't trigger, because n_gram_tags will exist in the dictionary by construction
+      else:
+        random_tag = random.choice(list(self.pos_to_token_transitions.keys()))
+        random_token = random.choice(self.pos_to_token_transitions[random_tag])[0]
+        new_n_gram.append(random_token)

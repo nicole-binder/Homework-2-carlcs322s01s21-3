@@ -1,0 +1,57 @@
+MarcovModel Documentation
+Authors: Yemi Shin, Nicole Binder, Sue He, Maanya Goenka
+
+train(self):
+  Requirements:
+      key: n-grams
+      value: list of tuples -> (token, probability_range)
+
+      ex) "the quick" : [(“the”, (0.0, 0.0)), (“quick”, (0.0, 0.0)), (“brown”, (0.0, 0.65)),(“fox”, (0.65, 0.95)), (“jumps”, (0.95, 1.0))]
+
+      except, we don't want to include tokens) with 0 probability_range
+
+      also, the probability ranges have to add up to 1
+
+    Pseudocode:
+      One pass, sliding window approach
+
+      ['My', 'name', 'is', 'Yemi', 'Shin', '.', 'I', 'go', 'to', 'Carleton', ',', 'and', 'I', 'like', 'ramen', '.', 'Yemi', 'Shin', 'is', 'a', 'CS', 'Major', '.']
+
+      if it's a bigram
+
+      first consider the key ('My', 'name') -> 'is' is added to the list of values
+      next, consider the key ('name', 'is') -> 'Yemi' is added to the list of values
+      ...
+
+      if key doesn't already exist in the dictionary, add a new entry
+      if key already exists, just add the new value to the list of values
+
+
+_original_generate(self, length, prompt):
+  Requirements:
+      should use the transition probabilities of the model (use Random module)
+
+      if no prompt, randomly select an n-gram that occurs after a newline chracter 
+      this ensures that the first token is always one that can start the sentence
+
+estimate(self, text):
+  Requirements:
+      to normalize the likelihood values, split the corpus in half, train the model on one half, and then calculate the likelihoods for all sentences in the other half 
+
+      now use the mean and standard deviation as an authorship estimator 
+      given an anonymous text, estimate its likelihood using this model, and then determine how many standard deviations away it is from the mean likelihood for the model. (aka z-score)
+
+      if z-score positive, it is more likely, if negative, it is less likely
+
+      normalize to the length of a sequence
+
+      at each step, the transition probabilities for a model are consulted to estimate the likelihood that the (given) next token would follow the (given) preceding n-gram
+
+      the likelihood for each token is added to a cumulative likelihood for the entire text, and by the end of the processing that text, you have a single number representing how likely it is that the given model produced that text
+    
+    Pseudocode:
+      given a text, caculate the likelihood
+      compare this likelihood to the authorship_estimator (aka mean likelihood for the model)
+      aka calculate the z-score
+      aka calculate how many standard deviations away from the author_estimator this number is
+

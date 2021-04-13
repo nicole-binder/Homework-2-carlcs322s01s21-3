@@ -1,0 +1,119 @@
+PERSON NULL
+0Hi! I'm Beans, your friendly next-door bot. What is your name? 
+Maanya Goenka
+1Hello, PERSON. So nice to meet you! 
+&
+ORG NULL
+0Where do you go to school?
+Carleton College.
+1ORG is a great school! But it must be hard taking classes online.
+&
+GPE NULL
+0Where are you from?
+India
+1Wow, that's lovely. I've always wanted to visit GPE. :D
+&
+GPE GPE
+1Where in GPE do you live?
+Kolkata
+1Ah, GPE is a beautiful place! 
+&
+FAC ORG
+1How do you usually come back to ORG after break?
+I fly into MSP airport from South Korea.
+1Nice, FAC is a great way to travel!
+&
+TIME ORG
+1How many hours does it take to get to Carleton?
+4
+1TIME, that's not too bad!
+&
+DATE NULL
+0What year were you born?
+5th July, 2000. 
+1So you're about AGE huh? That's crazy!
+&
+PRODUCT NULL
+0What is your favorite food?
+Pizzas and Pasta.
+1Yummmy! I could really use some PRODUCT right now.
+&
+PERSON NULL
+0How about your favorite song?
+I really like 'Blinding Lights' by the Weeknd.
+1Oh! Great choice. I love PERSON. Can't wait to see them live one day. 
+&
+ORG NULL
+0Where are you working this summer?
+I'm going to work for Microsoft.
+1Very exciting, ORG has really been doing well for themselves even with COVID. 
+&
+MONEY NULL
+0How much will you be making?
+46 dollars an hour. 
+0That is a lot!
+&
+PRODUCT NULL
+0What will you be using that money to buy?
+I'll save a lot of it, but I also want to travel to New Zealand.
+0Sounds amazing!
+&
+CARDINAL NULL
+0How many siblings do you have?
+2
+1Can I be your sibling, too? 
+&
+LANGUAGE NULL
+0Do you speak any languages other than English?
+Chinese.
+1LANGUAGE！
+&
+ORG NULL
+0Who did you want to win March Madness?
+Baylor.
+1ORG is a great team!
+&
+PERSON NULL
+0Who is your favorite author?
+Kurt Vonnegut.
+1PERSON is an amazing writer.
+&
+TIME NULL
+0What is the most hours you have gone without sleeping?
+48 hours.
+0Wow! You must've been tired. I have never slept :(
+&
+TIME NULL
+0What time is it where you are?
+12:55pm
+1Let's get TIME together!
+&
+PRODUCT NULL
+0Do you use an iPhone or Android?
+Android.
+0Oh, I am sorry to hear that...
+&
+PERSON ORG
+1Who is your favorite player on ORG?
+Davion Mitchell.
+1PERSON is my favorite player, too!
+&
+WORK_OF_ART NULL
+0What is you favorite piece of artwork?
+Sunflowers by Van Gogh
+1I really like the WORK_OF_ART too! It reminds of spring.
+&
+QUANTITY NULL
+0How tall are you?
+5'6
+1Wow. QUANTITY is pretty tall! 
+&
+PRODUCT NULL
+0What can't you live without?
+My phone.
+1PRODUCT really are essential these days. I can't imagine living without it either..
+&
+ORG NULL
+0Do you own any stocks?
+I don't currently. But I do want to buy Tesla's.
+1ORG is really on the rise these days. Better put money where it'll grow!

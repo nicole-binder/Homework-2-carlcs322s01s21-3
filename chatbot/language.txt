@@ -1,0 +1,66 @@
+Mandarin,我也会!
+Spanish,Yo también puedo hablar español también
+Arabic, استطيع التحدث بالعربية ايضا
+Hindi, मैं हिंदी भी बोल सकता हूं
+Russian,Я тоже могу говорить по русски
+Uyghur,مەنمۇ ئۇيغۇرچە سۆزلىيەلەيمەن
+Somali,Afsoomaali waan ku hadli karaa
+Thai,ฉันสามารถพูดภาษาไทยได้เช่นกัน
+Japanese,私も日本語が話せます
+Korean,나도 한국어를 할 수 있어요
+Punjabi,ਮੈਂ ਵੀ ਪੰਜਾਬੀ ਬੋਲ ਸਕਦਾ ਹਾਂ
+Zulu,Ngikwazi nokukhuluma isiZulu
+Igbo,Enwere m ike ịsụ asụsụ Igbo
+Swahili,Ninaweza kuzungumza Kiswahili pia
+Vietnamese,Tôi cũng có thể nói tiếng việt
+Hmong,Kuv tuaj yeem hais lus Hmoob ib yam
+Bengali,আমিও বাংলা বলতে পারি
+Dutch,Ik spreek ook Nederlands
+Afrikaans,Ek kan ook Afrikaans praat
+Albanian,Mund të flas edhe shqip
+Amharic,እኔም አማርኛ መናገር እችላለሁ
+Armenian,Ես էլ կարող եմ հայերեն խոսել
+Azerbaijani,Mən də Azərbaycan dilində danışa bilərəm
+Basque,Nik ere euskaraz hitz egin dezaket
+Belarusian,Я таксама магу размаўляць па-беларуску
+Bosnian,I ja znam bosanski
+Bulgarian,И аз мога да говоря български
+Catalan,Jo també puc parlar català
+Chichewa,Ndingathenso kulankhula Chichewa
+Croatian,I ja znam hrvatski
+Czech,Umím také česky
+Danish,Jeg kan også tale dansk
+Estonian,Ma oskan ka eesti keelt
+Filipino,Marunong din ako mag-Filipino
+Finnish,Pystyn puhumaan myös suomea
+French,Je peux aussi parler finnois
+German,Ich kann auch deutsch sprechen
+Greek,Μπορώ επίσης να μιλήσω ελληνικά
+Hawaiian,Hiki nō hoʻi iaʻu ke ʻōlelo Hawaiʻi
+Hebrew,גם אני יכול לדבר עברית
+Hungarian,Tudok magyarul is
+Indonesian,Saya juga bisa berbahasa Indonesia
+Italian,Parlo anche italiano
+Lao,ຂ້ອຍສາມາດເວົ້າພາສາລາວໄດ້ເຊັ່ນກັນ
+Macedonian,Можам да зборувам и македонски
+Malay,Saya juga boleh berbahasa Melayu
+Mongolian,Би ч гэсэн монголоор ярьж чаддаг
+Nepali,म पनि नेपाली बोल्न सक्छु
+Burmese,ငါလည်းဗမာလိုပြောနိုင်တယ်
+Norwegian,Jeg kan snakke norsk også
+Pashto,زه هم په پښتو خبرې کولی شم
+Persian,من هم می توانم فارسی صحبت کنم
+Polish,Ja też umiem mówić po polsku
+Portuguese,Eu posso falar portugues tambem
+Serbian,И ја знам српски
+Romanian,Și eu pot vorbi românește
+Slovenian,Tudi slovensko znam
+Tamil,என்னால் தமிழும் பேச முடியும்
+Tatar,Мин дә татарча сөйләшә алам
+Telugu,నేను కూడా తెలుగు మాట్లాడగలను
+Turkish,Bende türkçe konuşabiliyorum
+Ukrainian,Я теж можу говорити українською
+Urdu,میں بھی اردو بول سکتا ہوں
+Xhosa,Ndiyakwazi nokuthetha isiXhosa
+Uzbek,Men ham o'zbek tilida gaplasha olaman
+Yiddish,איך קען אויך ייִדיש
