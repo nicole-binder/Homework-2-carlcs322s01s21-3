@@ -32,6 +32,9 @@ class MarcovModel:
     self.pos_to_pos_transitions = dict()
     self.pos_to_token_transitions = dict()
     self.authorship_estimator = (0, 0) # first number represents the mean likelihood value, second value represents the standard deviation 
+    self.nlp = spacy.load("en_core_web_sm")
+    self.nlp.max_length = sys.maxsize
+    self.nlp.select_pipes(enable=["tok2vec", "tagger"])
     self.train()
 
   # Sue 
@@ -66,15 +69,7 @@ class MarcovModel:
   
   # Yemi
   def _hybrid_train(self):
-    # train using pos method
-    nlp = spacy.load("en_core_web_sm")
-    nlp.max_length = len(self.corpus)
-    with nlp.select_pipes(enable=["tok2vec", "tagger"]):
-      self.tokens = nlp(self.corpus)
     self._pos_train()
-
-    # train using word method
-    self.tokens = self._tokenize(self.corpus) # tokenize the corpus
     self._word_train()
 
   # Nicole
@@ -155,10 +150,7 @@ class MarcovModel:
     '''
     POPULATING POS_TO_POS DICTIONARY portion
     '''
-    nlp = spacy.load("en_core_web_sm")
-    nlp.max_length = len(self.corpus)
-    with nlp.select_pipes(enable=["tok2vec", "tagger"]):
-      self.tokens = nlp(self.corpus)
+    self.tokens = self.nlp(self.corpus)
         
     for count in range(len(self.tokens)-self.order+1):
       n_gram = self.tokens[count:count+self.order] #exclusive i.e. l=[1,2,3], l[0:2] = [1,2]
@@ -289,17 +281,16 @@ class MarcovModel:
           # print(self.pos_to_token_transitions)
 
   # Maanya
-  @staticmethod
-  def generate_pos_tags(corpus):
-    # Load the standard English model suite
-    nlp = spacy.load("en_core_web_sm")
-    # corpus = re.sub('\n', 'newline', corpus)
+  def generate_pos_tags(self, corpus):
+    # # Load the standard English model suite
+    # nlp = spacy.load("en_core_web_sm")
+    # # corpus = re.sub('\n', 'newline', corpus)
     
-    # Update the model suite to allow for a long corpus
-    nlp.max_length = len(corpus)
-    # POS-tag the corpus
-    with nlp.select_pipes(enable=["tok2vec", "tagger"]):
-        tagged_tokens = nlp(corpus)
+    # # Update the model suite to allow for a long corpus
+    # nlp.max_length = len(corpus)
+    # # POS-tag the corpus
+    # with nlp.select_pipes(enable=["tok2vec", "tagger"]):
+    tagged_tokens = self.nlp(corpus)
     # Print out the tagged tokens
     n_gram_tags = []
     for token in tagged_tokens:
@@ -648,10 +639,7 @@ class MarcovModel:
     gen_text = gen_text.split("\n")
     gen_text = " ".join(gen_text)
 
-    spacy_tokenize = spacy.load("en_core_web_sm")
-    spacy_tokenize.max_length = sys.maxsize # because it somehow always exceeds limit
-    with spacy_tokenize.select_pipes(enable=["tok2vec", "tagger"]):
-      gen_text_tokenized = spacy_tokenize(gen_text)
+    gen_text_tokenized = self.nlp(gen_text)
 
     start_position = 0
     
@@ -666,8 +654,7 @@ class MarcovModel:
         # if the n_gram_successor_tag does not exist in the list of values, it does not fit the syntactical structure
         if n_gram_successor_tag not in self.pos_to_pos_transitions[n_gram_tags]:
           gen_text = self._correct_succesor(gen_text, n_gram_tags,start_position + self.order)
-          with spacy_tokenize.select_pipes(enable=["tok2vec", "tagger"]):
-            gen_text_tokenized = spacy_tokenize(gen_text) 
+          gen_text_tokenized = self.nlp(gen_text) 
       # if the n_gram_tags does not exist, it means that it is NOT a valid syntactical structure
       else:
         new_n_gram_tags = self._find_replacement_n_gram(n_gram_tags)
@@ -675,10 +662,9 @@ class MarcovModel:
 
         if n_gram_successor_tag not in self.pos_to_pos_transitions[new_n_gram_tags]:
           gen_text = self._correct_succesor(gen_text, new_n_gram_tags, start_position + self.order)
-          with spacy_tokenize.select_pipes(enable=["tok2vec", "tagger"]):
-            gen_text_tokenized = spacy_tokenize(gen_text) 
+          gen_text_tokenized = self.nlp(gen_text) 
 
-      start_position += 1 # move to the next n-gram
+      start_position += 1 
       
     # do a bit of cleaning
     gen_text = gen_text.strip()
@@ -702,10 +688,7 @@ class MarcovModel:
       for token in self.pos_to_token_transitions[new_successor_tag]:
         random_number = random.random()
         if random_number >= token[1][0] and random_number < token[1][1]:
-          spacy_tokenize = spacy.load("en_core_web_sm")
-          spacy_tokenize.max_length = sys.maxsize # because it somehow always exceeds limit
-          with spacy_tokenize.select_pipes(enable=["tok2vec", "tagger"]):
-            gen_text_tokenized = [token.text for token in list(spacy_tokenize(gen_text))]
+          gen_text_tokenized = [token.text for token in list(self.nlp(gen_text))]
           gen_text_tokenized[position_to_correct] = token[0]
           gen_text = self._construct_text(gen_text_tokenized, 1)
           break
@@ -725,10 +708,7 @@ class MarcovModel:
         if random_number >= token[1][0] and random_number < token[1][1]:
           new_n_gram.append(token[0])
 
-    spacy_tokenize = spacy.load("en_core_web_sm")
-    spacy_tokenize.max_length = sys.maxsize # because it somehow always exceeds limit
-    with spacy_tokenize.select_pipes(enable=["tok2vec", "tagger"]):
-      gen_text_tokenized = [token.text for token in list(spacy_tokenize(gen_text))]
+    gen_text_tokenized = [token.text for token in list(self.nlp(gen_text))]
  
     # replace the specific n-gram portion of the gen_text
     index = 0
@@ -839,7 +819,7 @@ if __name__ == "__main__":
     #hybrid = bool(input("Would you like to use the hybrid approach? (True/False): "))
 
     #model = MarcovModel(corpus_filename, level, order, pos)
-    model = MarcovModel(corpus_filename = "alexander_dumas_collected_works.txt", level = "word", order = 2, pos = False, hybrid = True)
+    model = MarcovModel(corpus_filename = "alexander_dumas_collected_works.txt", level = "word", order = 2, pos = False, hybrid = False)
     # model._map_pos_to_tokens()
     #print("POS TO POS:", model.pos_to_pos_transitions)
     #print(model.pos_to_token_transitions)
