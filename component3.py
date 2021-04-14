@@ -7,6 +7,7 @@ import random
 Experimentation with our updated model!
 '''
 
+# Sue, Yemi, Nicole
 def component3a():
   print("-----working on component3a (Check 'results' folder)-----")
   f = open("results/component3a.txt", "a")
@@ -46,31 +47,31 @@ def component3a():
     for token in tagged_tokens:
       f.write(f"{token}/{token.tag_}\n") 
 
+# Sue, Yemi
 def component3b():
   print("-----working on component3b (Check 'results' folder)-----")
   f = open("results/component3b.txt", "a")
   f.write("\n-----POS ENGAGED-----\n\n")
-  for order in range(1,3):
+  for order in range(1,8):
     model = MarcovModel("alexander_dumas_collected_works.txt", level = "word", order = order, pos = True)
     f.write(f"-----Results for {model.corpus_filename}, Order: {order} -----\n")
     f.write(model.generate(30) + "\n")
 
-
+# Sue, Yemi
 def component3c():
+  print("-----working on component3c (Check 'results' folder)-----")
   f = open("results/component3c.txt", "a")
   f.write("-----without the POS-----")
-  model = MarcovModel("alexander_dumas_collected_works.txt", level = "word", order = 4, pos = False)
+  model = MarcovModel("alexander_dumas_collected_works.txt", level = "word", order = 5, pos = False)
   f.write(model.generate(30) + "\n")
   f.write("-----with the POS-----")
-  model2 = MarcovModel("alexander_dumas_collected_works.txt", level = "word", order = 4, pos = True)
+  model2 = MarcovModel("alexander_dumas_collected_works.txt", level = "word", order = 5, pos = True)
   f.write(model2.generate(30) + "\n")
 
 def component3():
-  # component3a()
-  component3b()
-  # component3c()
+  #component3a()
+  #component3b()
+  component3c()
 
-def main():
+if __name__ == "__main__":
   component3()
-
-main()

@@ -39,7 +39,6 @@ class MarcovModel:
     '''
     Populates 'transitions' dictionary of n-grams, where n is the given order of the model. In addition, calculates authorship_estimator (aka mean and stdev of likelihoods for the second half of the model).
     '''
-
     split_corpus = self.corpus.split("\n")
 
     # If the corpus is william shakespeare collected works, just reduce the size of the corpus for now (for future, make the code more efficient by serializing)
@@ -51,25 +50,21 @@ class MarcovModel:
     corpus_to_be_used_for_estimation = split_corpus[((len(split_corpus) * 8) // 10) + 1:]
 
     '''
-    POPULATING (whatever appropriate) TRANSITIONS DICTIONARY portion
+    POPULATING (appropriate) TRANSITIONS DICTIONARY portion
     '''
     if self.hybrid:
       self._hybrid_train()
     elif self.pos:
-      nlp = spacy.load("en_core_web_sm")
-      nlp.max_length = len(self.corpus)
-      with nlp.select_pipes(enable=["tok2vec", "tagger"]):
-        self.tokens = nlp(self.corpus)
       self._pos_train()
     else:
-      self.tokens = self._tokenize(self.corpus)
       self._word_train()
 
     '''
     CALCULATING AUTHORSHIP ESTIMATOR portion
     '''
-    #self.authorship_estimator = self._caculate_authorship_estimator(corpus_to_be_used_for_estimation)
+    # self.authorship_estimator = self._caculate_authorship_estimator(corpus_to_be_used_for_estimation)
   
+  # Yemi
   def _hybrid_train(self):
     # train using pos method
     nlp = spacy.load("en_core_web_sm")
@@ -82,11 +77,14 @@ class MarcovModel:
     self.tokens = self._tokenize(self.corpus) # tokenize the corpus
     self._word_train()
 
+  # Nicole
   def _word_train(self):
     '''
     Trains the model based on token-token transitions (original)
     aka. populates token_to_token_transitions.
     '''
+    self.tokens = self._tokenize(self.corpus)
+
     # puntuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t'''
     puntuations = '''\t'''
     # count how many times each token appears when a given n-gram in a nested list
@@ -147,7 +145,7 @@ class MarcovModel:
         specific_values[token_num] = tuple(specific_values[token_num])
         token_num += 1
   
-  # Maanya and Nicole
+  # Maanya, Nicole
   def _pos_train(self):
     '''
     Trains the model based on pos_tag - pos_tag transitions 
@@ -157,6 +155,11 @@ class MarcovModel:
     '''
     POPULATING POS_TO_POS DICTIONARY portion
     '''
+    nlp = spacy.load("en_core_web_sm")
+    nlp.max_length = len(self.corpus)
+    with nlp.select_pipes(enable=["tok2vec", "tagger"]):
+      self.tokens = nlp(self.corpus)
+        
     for count in range(len(self.tokens)-self.order+1):
       n_gram = self.tokens[count:count+self.order] #exclusive i.e. l=[1,2,3], l[0:2] = [1,2]
       n_gram_tags = []
@@ -306,7 +309,7 @@ class MarcovModel:
         n_gram_tags.append((token.tag_, token.text))
     return(n_gram_tags)
 
-# Maanya
+  # Maanya
   def _tokenize(self, text):
     '''
     Helper method to tokenize a certain line of sentence.
@@ -335,7 +338,7 @@ class MarcovModel:
         tokens_list.remove('\t')
     return tokens_list
   
-  #Maanya and Yemi
+  # Maanya, Yemi
   @staticmethod
   def _load_corpus(corpus_filename):
     '''
@@ -355,7 +358,7 @@ class MarcovModel:
         There is no corpus file with the given name in the 'corpora' folder.
     '''
     corpus_text = open(f"corpora/{corpus_filename}").read()
-    return corpus_text[:(len(corpus_text) * 8) // 10], corpus_text[:((len(corpus_text) * 8) // 10) + 1]
+    return corpus_text[:(len(corpus_text) * 8) // 100], corpus_text[:((len(corpus_text) * 8) // 10) + 1]
 
   def generate(self, length, prompt="\n"):
     '''
@@ -364,7 +367,7 @@ class MarcovModel:
     if self.hybrid:
       return self._hybrid_generate(length, prompt)
     elif self.pos:
-      return self._pos_generate(length, prompt)
+      return self._adapted_pos_generate(length, prompt)
     else:
       return self._original_generate(length, prompt)
   
@@ -424,6 +427,7 @@ class MarcovModel:
       
     return gen_text
   
+  # Nicole
   def _find_n_gram(self, prompt, tokenized_prompt, length_of_prompt, gen_text, length):
     '''
     Finds the appropriate n-gram based on the conditions given.
@@ -444,7 +448,7 @@ class MarcovModel:
     Returns:
       a string representing an n-gram
     '''
-
+    
     keys = self.token_to_token_transitions.keys()
     n_gram = ""
     #find n-gram CONTAINING the prompt or shortened prompt
@@ -480,6 +484,7 @@ class MarcovModel:
       gen_text = self._construct_text(less_tokens, 1)
     return n_gram, gen_text
 
+  # Nicole
   def _construct_text(self, tokens, first_token=0):
     punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n'''
     text = ""
@@ -498,173 +503,112 @@ class MarcovModel:
         else:
           text += " " + token
     return text
-
-  def _generate_string(self, list_of_pos_tags):
-    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n'''
-    #print(list_of_pos_tags)
-    text = list_of_pos_tags[0]
-    for element in list_of_pos_tags[1:]:
-        if element in punctuations:
-            text += element
-        else:
-            text += " " + element
-    return text
-
-  def _generate_initial_n_gram(self, pos_tagged_prompt):
-      #print(pos_tagged_prompt)
-      pos_n_gram = []
-
-      # so if no prompt was given, aka, prompt defaults to "\n", and through generate_pos_tags function, pos_tagged_prompt == ("NLN", "\n"), do this:
-      if len(pos_tagged_prompt) == 1 and pos_tagged_prompt[0] == ("NLN", "\n"):
-        for n_gram_tags in self.pos_to_pos_transitions.keys():
-          if pos_tagged_prompt[0] == n_gram_tags[0]: 
-            pos_n_gram = n_gram_tags
-            initial_n_gram = pos_n_gram
-      else:
-        punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n'''
-        initial_n_gram = ""
-        string_of_n_gram = ""
-        if len(pos_tagged_prompt) > self.order:
-            pos_tagged_prompt = pos_tagged_prompt[len(pos_tagged_prompt) - self.order:]
-        #print(pos_tagged_prompt)
-        for element in pos_tagged_prompt:
-            pos_n_gram.append(element[0])
-        pos_n_gram = tuple(pos_n_gram)
-      
-        #print(pos_n_gram)
-        string_initial_gram = self._generate_string(list(pos_n_gram))
-        if pos_n_gram in self.pos_to_pos_transitions.keys():
-            initial_n_gram = pos_n_gram
-          #print("Yes")
-          #print(initial_n_gram)
-        else:
-            string_to_append = ""
-            #print("No")
-            while len(pos_n_gram) > 1:
-            #print("Still in while loop")
-                pos_n_gram = list(pos_n_gram)[1:] 
-                string_pos_n_gram = self._generate_string(pos_n_gram)
-                #print(string_pos_n_gram)
-                for key in self.pos_to_pos_transitions.keys():
-                    string_of_key = self._generate_string(list(key))
-                    if string_pos_n_gram in string_of_key:
-                    #initial_n_gram = key
-                        string_to_append = string_of_key[string_of_key.index(string_pos_n_gram)+len(string_pos_n_gram):]
-                        #print(string_to_append)
-                        #print("Breaking")
-                        break
-            initial_n_gram = string_initial_gram + string_to_append
-          #, NN, VBZ. UH, PRP$
-            initial_n_gram = initial_n_gram.split(" ")
-            #print(initial_n_gram)
-            idx = 0 
-            while idx != len(initial_n_gram) :
-                if initial_n_gram[idx][-1] in punctuations and len(initial_n_gram[idx]) > 1 and initial_n_gram[idx][-1] != '$':
-                    initial_n_gram.insert(idx+1, initial_n_gram[idx][-1])
-                    initial_n_gram[idx] = initial_n_gram[idx][:-1]
-                idx += 1
-            #print(initial_n_gram)
-            while len(initial_n_gram) < self.order:
-              initial_n_gram = self._generate_initial_n_gram(initial_n_gram)
-      #print(tuple(initial_n_gram))
-      return tuple(initial_n_gram)
-
-  # Maanya
-  def _pos_generate(self, length, prompt="\n"):
+  
+  # Maanya, Nicole
+  def _adapted_pos_generate(self, length, prompt="\n"):
     '''
-    Generates using the pos tag method.
+    Generates a text of 'length' tokens which begins with 'prompt' token if given one.
 
-    Update:
-      Next, update your generate() method so that a POS-oriented generation procedure is instead engaged when this method is called with the framework in POS mode. This procedure should work as follows. If a prompt is given, the prompt is POS-tagged as a first step; if no prompt is given, or if it’s shorter than your model’s order, adapt your solution from Homework 1 for producing an initial n-gram. To generate the next token, first come up with its part of speech. To do this, take the final n POS tags in the current sequence and treat these as your current n-gram, which you can then use to probabilistically generate a successor POS tag. To render this as an actual token,use the dictionary that you created in step c to probabilistically select a token associated with that part of speech. Repeat this process until the generated text is of the specified length! 
-    '''
-    gen_text = prompt
-    n_gram = ""
-    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n'''
+    Args:
+      length: 
+        length of the text to be generated
+      prompt: 
+        starting tokens) (default: "\n")
     
-    tokenized_prompt = self._tokenize(prompt)
-    length_of_prompt = len(tokenized_prompt)
-    #pos tag of the initial prompt
-    pos_tagged_prompt = self.generate_pos_tags(prompt) 
-    initial_tag_list = [i[0] for i in pos_tagged_prompt]
-    # print(initial_tag_list)
-    last_pos_tag = pos_tagged_prompt[-1][0]
-    # print(last_pos_tag)
-    #[('CC', 'And'), ('UH', 'hello'), ('PRP$', 'My'), ('NN', 'name'), ('VBZ', 'is'), ('.', '.')]
-    #print(pos_tagged_prompt)
-    pos_tags = self._generate_initial_n_gram(pos_tagged_prompt)
-    pos_tags = list(pos_tags)
-    #print(pos_tags_tuple)
-    while len(pos_tags) < length:
-        gen_n_gram = pos_tags[len(pos_tags)-self.order:]
-        temp = self._generate_initial_n_gram(gen_n_gram)
-        pos_tags += temp
-    indexed_tag = pos_tags.index(last_pos_tag)
-    # print(initial_tag_list)
-    # print(pos_tags)
-    # print(pos_tags[indexed_tag + 1:])
-    final_tags = initial_tag_list + pos_tags[indexed_tag + 1:]
-    # print(final_tags)
-    final_tags = final_tags[:length]
-    #pos_tags = pos_tags[len(tokenized_prompt):length]
-    # print(final_tags)
-    print(final_tags[len(initial_tag_list):])
-    # for elem in final_tags[len(initial_tag_list):]:
-    #     for i in self.pos_to_token_transitions.keys():
-    #         if i == elem:
-    #             gen_text += 
+    Returns:
+      A string containing the generated text
+    '''
+    gen_prompt_tags = self.generate_pos_tags(prompt)
+    tagged_prompt = []
+    for tag in gen_prompt_tags:
+      tagged_prompt.append(tag[0])
+    tagged_prompt = tuple(tagged_prompt)
 
+    final_tags = list(tagged_prompt)
+    n_gram = ""
 
-    # for idx in len(pos_tags):
-    #     gen_text += 
-    #print(gen_text)
-    #print(gen_n_gram)
-    #while len(pos_tags_tuple) != str()
-    #print(initial_n_gram)
-    #pos_text = initial_n_gram
+    length_of_prompt = len(tagged_prompt)
+    
+    # print(self.pos_to_pos_transitions)
     #prompt does not have a complete n-gram
-    # if length_of_prompt < self.order:
-    #   n_gram = generate_initial_n_gram(pos_tagged_prompt, tokenized_prompt, length_of_prompt, gen_text, length)
-    # else: #prompt is longer than or equal to one n-gram, reduce/keep the same
-    #   n_tokens = tokenized_prompt[length_of_prompt - self.order:]
-    #   n_gram = self._construct_text(n_tokens, 1)
-    #   n_gram_tags = self.generate_pos_tags(n_gram)
-    #   pos_n_gram = []
-    #   for element in n_gram_tags:
-    #       pos_n_gram.append(element[0])
-    #   pos_n_gram = tuple(pos_n_gram)
-    #   #check if pos_n_gram is in our dictionary
-    #   if pos_n_gram not in self.pos_to_pos_transitions.keys():
-    #     #find key containing prompt
-    #     n_gram, gen_text = self._find_n_gram(n_gram, self._tokenize(n_gram), len(self._tokenize(n_gram)), gen_text, length)
-    #     n_gram_tags = self.generate_pos_tags(n_gram)
-    #   pos_n_gram = []
-    #   for element in n_gram_tags:
-    #       pos_n_gram.append(element[0])
-    #   pos_n_gram = tuple(pos_n_gram)
-    #   print(pos_n_gram)
-    #   print(gen_text)
-    #   while len(self._tokenize(gen_text)) < length:
-    #   values = self.pos_to_token_transitions.get(pos_n_gram)
-    #   if values is None:
-    #     n_gram, gen_text = self._find_n_gram(n_gram, self._tokenize(n_gram), len(self._tokenize(n_gram)), gen_text, length)
-    #     for element in n_gram_tags:
-    #       pos_n_gram.append(element[0])
-    #     pos_n_gram = tuple(pos_n_gram)
-    #     values = self.pos_to_token_transitions.get(pos_n_gram)
-    #   random_num = random.random()
-    #   # ["the": (("end", (0,.5)), ("fox", (.5,1)))]
-    #   for t in values:
-    #     probability_range = t[1]
-    #     if random_num > probability_range[0] and random_num <= probability_range[1]:
-    #       add_word = t[0]
-    #     if add_word in punctuations:
-    #       gen_text += add_word
-    #     else:
-    #       gen_text += " " + add_word
-    #   #get last n token of generated text
-    #   pos_tagged_text = pos_to_token_transitions(gen_text)
-    #   n_gram = self._construct_text(pos_tagged_text[len(pos_tagged_text) - self.order:],1) 
-    return gen_text
+    if length_of_prompt < self.order:
+      n_gram, final_tags = self._find_n_gram_pos(tagged_prompt, final_tags, length_of_prompt, length)
+    else: #prompt is longer than or equal to one n-gram, reduce/keep the same
+      n_gram = tuple(tagged_prompt[length_of_prompt - self.order:])
+      #check if n_gram is in our dictionary
+      if n_gram not in self.pos_to_pos_transitions.keys():
+        #find key containing prompt
+        n_gram, final_tags = self._find_n_gram_pos(tagged_prompt, final_tags, length_of_prompt, length)
+
+    while len(final_tags) < length:
+      values = self.pos_to_pos_transitions.get(n_gram)
+      if values is None:
+        n_gram, final_tags = self._find_n_gram_pos(n_gram, final_tags, length_of_prompt, length)
+        values = self.pos_to_pos_transitions.get(n_gram)
+      random_num = random.random()
+      # ["the": (("end", (0,.5)), ("fox", (.5,1)))]
+      for t in values:
+        probability_range = t[1]
+        if random_num > probability_range[0] and random_num <= probability_range[1]:
+          add_tag = t[0]
+          final_tags.append(add_tag)
+      #get last n token of generated text
+      n_gram = tuple(final_tags[len(final_tags) - self.order:])
+      
+    return self._generate_text_from_tags(tagged_prompt, prompt, final_tags)
+  
+  # Nicole, Maanya
+  def _find_n_gram_pos(self, tagged_prompt, final_tags, length_of_prompt, length):
+    keys = self.pos_to_pos_transitions.keys()
+    n_gram = ""
+    prompt = tagged_prompt
+    #find n-gram CONTAINING the prompt or shortened prompt
+    x = 0 #variable to decrement token length of prompt (ex. "the brown" not found, then check if some key begins with "brown")
+    while n_gram == "":
+      for k in keys:
+        #see if prompt is the start of key k
+        shortened_key = k[0:length_of_prompt]
+        #store to add to gen_text when valid key is found
+        rest_of_key = list(k[length_of_prompt:])
+        if shortened_key == prompt:
+          n_gram = k
+          for i in rest_of_key:
+            final_tags.append(i)
+          #add rest of key to gen_text, ex. key = "brown fox jumps", prompt = "the quick brown", gen_text = "the quick brown fox jumps", n_gram = brown fox jumps
+          break #valid dictionary key found
+      #if prompt not contained in any n-grams in dictionary, remove first token, check again
+      x+=1
+      prompt = tuple(tagged_prompt[x:])
+      length_of_prompt = len(prompt)
+      #if no words in the prompt in any dictionary key, choose a random key to start text generation
+      if x == len(tagged_prompt):
+        #note: random key not appended to gen_text
+        entry_list = list(self.pos_to_pos_transitions.keys())
+        n_gram = random.choice(entry_list)
+    if len(final_tags) > length:
+      final_tags = final_tags[0:self.order]
+    return n_gram, final_tags
+
+  # Nicole
+  def _generate_text_from_tags(self, tagged_prompt, prompt, final_tags):
+    gen_text_list = []
+    for tag in final_tags[len(tagged_prompt):]:
+      values = self.pos_to_token_transitions[tag]
+      random_num = random.random()
+      for v in values:
+        probability_range = v[1]
+        if random_num > probability_range[0] and random_num <= probability_range[1]:
+          gen_text_list.append(v[0])
+    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n'''
+    last_char_punctuation = False
+    for char in prompt:
+      if char in punctuations:
+        last_char_punctuation = True
+    if last_char_punctuation == True:
+      beginning = prompt
+    else:
+      beginning = prompt + " "
+    return beginning + self._construct_text(gen_text_list)
 
   # Yemi
   def _hybrid_generate(self, length, prompt="\n"):
@@ -721,9 +665,7 @@ class MarcovModel:
       if n_gram_tags in self.pos_to_pos_transitions.keys():
         # if the n_gram_successor_tag does not exist in the list of values, it does not fit the syntactical structure
         if n_gram_successor_tag not in self.pos_to_pos_transitions[n_gram_tags]:
-          print("before correction: " + gen_text)
           gen_text = self._correct_succesor(gen_text, n_gram_tags,start_position + self.order)
-          print("after correction: " + gen_text)
           with spacy_tokenize.select_pipes(enable=["tok2vec", "tagger"]):
             gen_text_tokenized = spacy_tokenize(gen_text) 
       # if the n_gram_tags does not exist, it means that it is NOT a valid syntactical structure
@@ -732,9 +674,7 @@ class MarcovModel:
         gen_text = self._correct_n_gram(gen_text, new_n_gram_tags, start_position, start_position + self.order)
 
         if n_gram_successor_tag not in self.pos_to_pos_transitions[new_n_gram_tags]:
-          print("before correction 2: " + gen_text)
           gen_text = self._correct_succesor(gen_text, new_n_gram_tags, start_position + self.order)
-          print("after correction 2: " + gen_text)
           with spacy_tokenize.select_pipes(enable=["tok2vec", "tagger"]):
             gen_text_tokenized = spacy_tokenize(gen_text) 
 
@@ -746,9 +686,9 @@ class MarcovModel:
     gen_text = gen_text.split("\n")
     gen_text = " ".join(gen_text)
     
-    print("final text")
     return gen_text
   
+  # Yemi
   def _correct_succesor(self, gen_text, n_gram_tags, position_to_correct):
     random_number = random.random()
     new_successor_tag = ""
@@ -775,6 +715,7 @@ class MarcovModel:
     gen_text = gen_text.strip('''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n''')
     return gen_text
   
+  # Yemi
   def _correct_n_gram(self, gen_text, n_gram_tags, start_position, end_position):
     random_number = random.random()
     new_n_gram = []
@@ -798,6 +739,7 @@ class MarcovModel:
     updated_gen_text = self._construct_text(gen_text_tokenized)
     return updated_gen_text
 
+  # Yemi
   def _find_replacement_n_gram(self, n_gram_tags):
     start_position = 1
 
@@ -827,6 +769,7 @@ class MarcovModel:
     likelihood_of_this_text = self._calculate_likelihood(text)
     return (likelihood_of_this_text - self.authorship_estimator[0]) / self.authorship_estimator[1]
 
+  # Yemi
   def _caculate_authorship_estimator(self, corpus_to_be_used_for_estimation):
     '''
     Helper method to calculate the authorship estimator for the model.
@@ -848,6 +791,7 @@ class MarcovModel:
     
     return (mean, standard_dev)
   
+  # Yemi
   def _calculate_likelihood(self, text):
     '''
     Helper method to caculate the likelihood of a given text, based on the transitions dictionary of the trained model.
@@ -895,14 +839,14 @@ if __name__ == "__main__":
     #hybrid = bool(input("Would you like to use the hybrid approach? (True/False): "))
 
     #model = MarcovModel(corpus_filename, level, order, pos)
-    model = MarcovModel(corpus_filename = "quick_test.txt", level = "word", order = 5, pos = True)
-
-    #print(model.token_to_token_transitions)
-    #print(model.pos_to_pos_transitions)
-    model._pos_generate(15, "My name is Nicole and,")
+    model = MarcovModel(corpus_filename = "alexander_dumas_collected_works.txt", level = "word", order = 2, pos = False, hybrid = True)
+    # model._map_pos_to_tokens()
+    #print("POS TO POS:", model.pos_to_pos_transitions)
+    #print(model.pos_to_token_transitions)
+    print(model.generate(20, "I wonder if there"))
     #print(model.generate(20))
     #print(model.generate_pos_tags("My name is Nicole and."))
-    # print("pos to pos")
+    # print("pos to pos") is and
     #print(model.pos_to_token_transitions)
     # print("pos to tokens")
     #print(model.pos_to_token_transitions)

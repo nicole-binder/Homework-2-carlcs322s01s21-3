@@ -13,6 +13,7 @@ class ChatBot:
     self.general_responses = ["Oh, awesome!", "Neat!", "OMG same here!!"]
     self.language_responses = dict()
 
+  # Nicole
   def initalize_questions(self):
     file = open("bot_questions.txt").read()
     questions = file.split("&\n")
@@ -39,6 +40,7 @@ class ChatBot:
       question_item = Question(question, question_ner, response, response_ner, info_in_question, info_in_response)
       self.question_list.append(question_item)
 
+  # Nicole, Yemi, Sue
   def ask_questions(self):
     nlp = spacy.load("en_core_web_sm")
     nlp.max_length = sys.maxsize
@@ -119,6 +121,7 @@ class ChatBot:
       except:
         print("Beans: Thanks for talking with me! Let's talk again soon!")
   
+  # Nicole
   def make_beans_multilingual(self):
     file = open("language.txt").read()
     languages = file.split("\n")

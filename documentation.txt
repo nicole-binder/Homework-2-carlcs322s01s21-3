@@ -1,6 +1,7 @@
 MarcovModel Documentation
 Authors: Yemi Shin, Nicole Binder, Sue He, Maanya Goenka
 
+# Some doc string for the original train method
 train(self):
   Requirements:
       key: n-grams
@@ -26,7 +27,7 @@ train(self):
       if key doesn't already exist in the dictionary, add a new entry
       if key already exists, just add the new value to the list of values
 
-
+# Some doc string for the original generate method
 _original_generate(self, length, prompt):
   Requirements:
       should use the transition probabilities of the model (use Random module)
@@ -55,3 +56,98 @@ estimate(self, text):
       aka calculate the z-score
       aka calculate how many standard deviations away from the author_estimator this number is
 
+# Maanya's Version of Generating N Grams
+  def _generate_initial_n_gram(self, pos_tagged_prompt):
+        initial_n_gram = []
+        if len(pos_tagged_prompt) == 1 and pos_tagged_prompt[0] == "NLN":
+          for n_gram_tags in self.pos_to_pos_transitions.keys():
+            if pos_tagged_prompt[0] == n_gram_tags[0]: 
+              initial_n_gram = n_gram_tags
+        else:
+          pos_n_gram = []
+          punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n'''
+          if len(pos_tagged_prompt) > self.order:
+              pos_tagged_prompt = pos_tagged_prompt[len(pos_tagged_prompt) - self.order:]
+          #print(pos_tagged_prompt)
+          for element in pos_tagged_prompt:
+              pos_n_gram.append(element) # appending the pos_tag only
+          pos_n_gram = tuple(pos_n_gram) # ("NN", ".", "P", "PRP$")
+          #print(pos_n_gram)
+          pos_initial_gram = pos_n_gram
+          if pos_n_gram in self.pos_to_pos_transitions.keys():
+              #print("tUPLE IS PRESENT")
+              initial_n_gram = pos_n_gram
+          else:
+              #print("tUPLE IS NOT PRESENT")
+              tuple_to_append = tuple()
+              while len(pos_n_gram) > 1:
+              #print("Still in while loop")
+                  pos_n_gram = pos_n_gram[1:] 
+                  #print(self.pos_to_pos_transitions.keys())
+                  for key in self.pos_to_pos_transitions.keys():
+                      #print(pos_n_gram, len(pos_n_gram), pos_n_gram[0])
+                      if (len(pos_n_gram) == 1 and pos_n_gram[0] in key) or pos_n_gram in key:
+                          #print("If condition triggered")
+                          if (len(pos_n_gram) == 1 and pos_n_gram[0] in key):
+                              tuple_to_append = key[key.index(pos_n_gram[0])+ 1:]
+                          else:
+                              tuple_to_append = key[key.index(pos_n_gram)+ len(pos_n_gram):]
+                          break
+              if len(tuple_to_append) == 0:
+                  tuple_to_append = random.choice(list(self.pos_to_pos_transitions.keys()))
+                  #print("Tuple", tuple_to_append, "Initial", pos_initial_gram)
+                      
+              initial_n_gram = tuple_to_append
+    
+        return initial_n_gram
+  
+# Maanya's Version of Pos Generate Function
+  def _pos_generate(self, length, prompt="\n"):
+    '''
+    Generates using the pos tag method.
+
+    Update:
+      Next, update your generate() method so that a POS-oriented generation procedure is instead engaged when this method is called with the framework in POS mode. This procedure should work as follows. If a prompt is given, the prompt is POS-tagged as a first step; if no prompt is given, or if it’s shorter than your model’s order, adapt your solution from Homework 1 for producing an initial n-gram. To generate the next token, first come up with its part of speech. To do this, take the final n POS tags in the current sequence and treat these as your current n-gram, which you can then use to probabilistically generate a successor POS tag. To render this as an actual token,use the dictionary that you created in step c to probabilistically select a token associated with that part of speech. Repeat this process until the generated text is of the specified length! 
+    '''
+    gen_text = prompt
+    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n'''
+    
+    # pos tag of the initial prompt -> [("NN", "Apple"), ("JJ", "Tasty")]
+    pos_tagged_prompt = self.generate_pos_tags(prompt) 
+    # obtain pos tags only -> ["NN", "JJ"]
+    gen_tags = pos_tagged_prompt
+    initial_tag_list = [i[0] for i in pos_tagged_prompt]
+    #print(initial_tag_list)
+    last_pos_tag = initial_tag_list[-1] 
+    pos_tags = self._generate_initial_n_gram(initial_tag_list)
+    #print(pos_tags)
+    while len(pos_tags) < length:
+         temp = self._generate_initial_n_gram(pos_tags)
+         #print(temp)
+         pos_tags += temp
+    print(pos_tags)
+    #print(pos_tags)
+    indexed_tag = pos_tags.index(last_pos_tag)
+#     print(initial_tag_list)
+#     print(pos_tags)
+#     # print(pos_tags[indexed_tag + 1:])
+    final_tags = tuple(initial_tag_list) + pos_tags[indexed_tag + 1:]
+#    # print(final_tags)
+    final_tags = final_tags[:length]
+#     #pos_tags = pos_tags[len(tokenized_prompt):length]
+    print(final_tags)
+#    # print(final_tags[len(initial_tag_list):])
+    for elem in final_tags[len(initial_tag_list):]:
+#         print(elem)
+        token_choices = self.pos_to_token_transitions.get(elem)
+#         print(token_choices)
+        random_num = random.uniform(0,1)
+        for j in token_choices:
+            if random_num >= j[1][0] and random_num < j[1][1]:
+                if j[0] in punctuations:
+                    gen_text += j[0]
+                else:
+                    gen_text += " " + j[0]
+            break
+    print(gen_text)
+    return gen_text

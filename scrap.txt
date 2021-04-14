@@ -10,3 +10,70 @@ for tag in n_gram_tags:
         random_tag = random.choice(list(self.pos_to_token_transitions.keys()))
         random_token = random.choice(self.pos_to_token_transitions[random_tag])[0]
         new_n_gram.append(random_token)
+
+
+find_initial_n_gram
+
+# NN,. P PRP$
+        #print(pos_n_gram)
+        # purpose of generate string is to be able to use "in"
+        # string_initial_gram = self._generate_string(list(pos_n_gram))
+
+
+# so if no prompt was given, aka, prompt defaults to "\n", and through generate_pos_tags function, pos_tagged_prompt == ("NLN", "\n"), do this:
+      if len(pos_tagged_prompt) == 1 and pos_tagged_prompt[0] == ("NLN", "\n"):
+        for n_gram_tags in self.pos_to_pos_transitions.keys():
+          if pos_tagged_prompt[0] == n_gram_tags[0]: 
+            initial_n_gram = n_gram_tags
+      else:
+        pos_n_gram = []
+        punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n'''
+        initial_n_gram = ""
+        string_of_n_gram = ""
+        if len(pos_tagged_prompt) > self.order:
+            pos_tagged_prompt = pos_tagged_prompt[len(pos_tagged_prompt) - self.order:]
+        #print(pos_tagged_prompt)
+        for element in pos_tagged_prompt:
+            pos_n_gram.append(element[0]) # appending the pos_tag only
+        pos_n_gram = tuple(pos_n_gram) # ("NN", ".", "P", "PRP$")
+        
+        pos_initial_gram = list(pos_n_gram)
+        if pos_n_gram in self.pos_to_pos_transitions.keys():
+            initial_n_gram = pos_n_gram
+        else:
+            while len(pos_n_gram) > 1:
+            #print("Still in while loop")
+                pos_n_gram = pos_n_gram[1:] 
+                # string_pos_n_gram = self._generate_string(pos_n_gram)
+                for key in self.pos_to_pos_transitions.keys():
+                    # string_of_key = self._generate_string(list(key))
+                    if pos_n_gram in key:
+                    #initial_n_gram = key
+                        tuple_to_append = key[key.index(pos_n_gram)+len(pos_n_gram):]
+                        break
+            initial_n_gram = list(pos_initial_gram) + list(tuple_to_append)
+            #, NN, VBZ. UH, PRP$
+            # initial_n_gram = initial_n_gram.split(" ")
+            # print(initial_n_gram)
+            # idx = 0 
+            # while idx != len(initial_n_gram) :
+            #     if initial_n_gram[idx][-1] in punctuations and len(initial_n_gram[idx]) > 1 and initial_n_gram[idx][-1] != '$':
+            #         initial_n_gram.insert(idx+1, initial_n_gram[idx][-1])
+            #         initial_n_gram[idx] = initial_n_gram[idx][:-1]
+            #     idx += 1
+            #print(initial_n_gram)
+            # while len(initial_n_gram) < self.order:
+            #   initial_n_gram = self._generate_initial_n_gram(initial_n_gram)
+      #print(tuple(initial_n_gram))
+      return tuple(initial_n_gram)
+
+def _generate_string(self, list_of_pos_tags):
+    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~\t\n'''
+    #print(list_of_pos_tags)
+    text = list_of_pos_tags[0]
+    for element in list_of_pos_tags[1:]:
+        if element in punctuations:
+            text += element
+        else:
+            text += " " + element
+    return text

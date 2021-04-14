@@ -1,6 +1,6 @@
 Trial 2:
 
------Sentence 0 of Chat_Bot/language.txt-----
+-----Sentence 0 of chatbot/language.txt-----
 Basque/JJ
 ,/,
 Nik/NNP
@@ -9,13 +9,13 @@ euskaraz/NN
 hitz/NN
 egin/NN
 dezaket/NN
------Sentence 1 of Chat_Bot/language.txt-----
+-----Sentence 1 of chatbot/language.txt-----
 Slovenian/JJ
 ,/,
 Tudi/NNP
 slovensko/NN
 znam/NN
------Sentence 2 of Chat_Bot/language.txt-----
+-----Sentence 2 of chatbot/language.txt-----
 Hungarian/NNP
 ,/,
 Tudok/NNP

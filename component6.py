@@ -1,5 +1,6 @@
 from chatbot.chat_bot import ChatBot
 
+# Nicole, Yemi, Sue
 def component6():
   '''
   Build a chatbot.

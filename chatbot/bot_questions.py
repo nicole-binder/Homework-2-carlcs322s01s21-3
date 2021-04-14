@@ -1,4 +1,5 @@
 class Question:
+  # Nicole
   def __init__(self, question, question_ner, response, response_ner, info_in_question, info_in_response):
     self.question = question
     self.response = response
